@@ -77,7 +77,6 @@ void internet_socket_server(){
     close(socket_fd); 
 }
 
-
 void file_socket_server(){
     string path = "/tmp/socket/socket.tmp";
     server s;
@@ -116,12 +115,37 @@ void file_socket_server(){
     }
 }
 
+void multi_process_test(){
+    // file_socket_server();
+    // internet_socket_server();
+    pid_t pid;
+    int count = 0;
+    pid = fork();   //fork一个进程,这样,接下来的代码会同时被两个进程都执行
+    if(pid == 0)
+    {               //pid为0,
+        printf("this is child process, pid is %d\n",getpid());
+        count+=2;
+        printf("count = %d\n",count);
+    }
+    else if(pid > 0)
+    {
+        printf("this is father process, pid is %d\n",getpid());
+        count++;
+        printf("count = %d\n",count);
+    }
+    else
+    {
+        fprintf(stderr,"ERROR:fork() failed!\n");
+    }
+    cout<< "hello pid : " << getpid() << endl;
+    sleep(1000);//新加入的行，让程序在这里暂停10秒，父进程和子进程都会执行这行代码
+}
+
 /*
  * 
  */
 int main(int argc, char** argv) {
-    // file_socket_server();
-    internet_socket_server();
+    multi_process_test();
     return 0;
 }
 
