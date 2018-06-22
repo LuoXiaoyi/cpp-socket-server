@@ -27,7 +27,7 @@
 #include <sys/un.h>
 #include <cstring>
 #include <string>
-#include <error.h>
+#include <errno.h>
 
 using namespace std;
 
