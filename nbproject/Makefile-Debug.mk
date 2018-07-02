@@ -36,6 +36,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/socket/epoll_server.o \
+	${OBJECTDIR}/socket/poll_server.o \
+	${OBJECTDIR}/socket/select_server.o \
 	${OBJECTDIR}/socket/server.o
 
 
@@ -67,6 +70,21 @@ ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/socket/epoll_server.o: socket/epoll_server.cpp
+	${MKDIR} -p ${OBJECTDIR}/socket
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/socket/epoll_server.o socket/epoll_server.cpp
+
+${OBJECTDIR}/socket/poll_server.o: socket/poll_server.cpp
+	${MKDIR} -p ${OBJECTDIR}/socket
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/socket/poll_server.o socket/poll_server.cpp
+
+${OBJECTDIR}/socket/select_server.o: socket/select_server.cpp
+	${MKDIR} -p ${OBJECTDIR}/socket
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/socket/select_server.o socket/select_server.cpp
 
 ${OBJECTDIR}/socket/server.o: socket/server.cpp
 	${MKDIR} -p ${OBJECTDIR}/socket

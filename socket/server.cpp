@@ -17,20 +17,28 @@ server::server() {
 }
 
 int server::open_listenfd(string path) {
+    if(path.length() > UNIX_PATH_MAX){
+        cout << "the length of path: " << path << " is longer than " << UNIX_PATH_MAX << endl;
+        return -1;
+    }
+    
     // create socket
     int socket_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     printf("socket_fd %d \n", socket_fd);
 
     // address
     struct sockaddr_un addr;
+    memset(&addr,0,sizeof(sockaddr_un));
     addr.sun_family = AF_UNIX;
-    strcpy(addr.sun_path, path.data());
+    strncpy(addr.sun_path, path.data(),path.length());
 
     // bind
     int res = bind(socket_fd, (struct sockaddr*) &addr, sizeof (addr));
+    if(res < 0) return -1;
     printf("bind res: %d \n", res);
 
     res = listen(socket_fd, 5);
+    if(res < 0) return -1;
     printf("listen res: %d \n", res);
 
     return socket_fd;
